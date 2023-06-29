@@ -1,0 +1,9 @@
+.vsconfig
+Library/
+UserSettings/
+Temp/
+Assembly-CSharp.csproj
+Boost.sln
+.vs/Boost/v16/.suo
+obj/
+Logs/
