@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5500632623143761921}
   - component: {fileID: 5500632623143761920}
   - component: {fileID: 5500632624438649796}
+  - component: {fileID: 4360581061410807793}
   - component: {fileID: 5500632624438649801}
   - component: {fileID: 2142741252659432367}
   m_Layer: 0
@@ -114,6 +115,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thrustPower: 100
   rotationPower: 300
+--- !u!114 &4360581061410807793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5500632623143761923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673d53bd9e7ac7447bfbb6de93882fe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &5500632624438649801
 Rigidbody:
   m_ObjectHideFlags: 0
