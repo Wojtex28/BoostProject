@@ -10,18 +10,25 @@ public class CollisionHandler : MonoBehaviour
 {
 
     [SerializeField] public float loadLevelDelay = 1.0f;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip success;
+    [SerializeField] AudioClip failExplosion;
+
+    public bool isTransitioning = false;
+    
+
+
     void OnCollisionEnter(Collision other)
     {
+        if (isTransitioning) { return; }
+
         switch (other.gameObject.tag)
         {
             case "Friendly":
-                StartSucessSequence();
+                Debug.Log("You have touched friendly!");
                 break;
             case "Finish":
-                Invoke("LoadNextLevel",loadLevelDelay);
-                break;
-            case "Fuel":
-                Debug.Log("You have picked up fuel!");
+                StartSucessSequence();
                 break;
             default:
                 StartCrashSequence();
@@ -31,13 +38,25 @@ public class CollisionHandler : MonoBehaviour
 
     private void StartSucessSequence()
     {
-        throw new NotImplementedException();
+        isTransitioning = true;
+        StopPlayerMovement();
+        Invoke("LoadNextLevel", loadLevelDelay);
+        audioSource.Stop();
+        audioSource.PlayOneShot(success);
+        
+      
     }
 
     void StartCrashSequence()
     {
+        isTransitioning = true;
         StopPlayerMovement();
         Invoke("ReloadLevel", loadLevelDelay);
+        audioSource.Stop();
+        audioSource.PlayOneShot(failExplosion);
+        
+        
+
     }
 
     void ReloadLevel()
@@ -48,7 +67,6 @@ public class CollisionHandler : MonoBehaviour
 
     void LoadNextLevel()
     {
-        StopPlayerMovement();
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int loadNextLevel = currentSceneIndex + 1;
         if (loadNextLevel == SceneManager.sceneCountInBuildSettings)
