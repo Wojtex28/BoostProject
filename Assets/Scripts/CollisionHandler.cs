@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Accessibility;
+using UnityEngine.ParticleSystemJobs;
 using System;
 
 public class CollisionHandler : MonoBehaviour
@@ -14,13 +14,52 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] AudioClip success;
     [SerializeField] AudioClip failExplosion;
 
+    [SerializeField] ParticleSystem successParticle;
+    [SerializeField] ParticleSystem failExplosionParticle;
+    [SerializeField] Collider rocket;
+
     public bool isTransitioning = false;
+    public bool collisionDisable = false;
     
+
+    void Update()
+    {
+        NextScene();
+        DisableCollisions();
+    }
+
+    //SCENE DEBUG START
+
+    void NextScene()
+    {
+
+        if (Input.GetKey(KeyCode.L))
+        {
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            int loadNextLevel = currentSceneIndex + 1;
+            if (loadNextLevel == SceneManager.sceneCountInBuildSettings)
+            {
+                loadNextLevel = 0;
+            }
+            SceneManager.LoadScene(loadNextLevel);
+        }
+
+    }
+
+    void DisableCollisions()
+    {
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            collisionDisable = !collisionDisable; // toggle collision
+        }
+    }
+
+    //SCENE DEBUG END
 
 
     void OnCollisionEnter(Collision other)
     {
-        if (isTransitioning) { return; }
+        if (isTransitioning || collisionDisable) { return; }
 
         switch (other.gameObject.tag)
         {
@@ -36,13 +75,15 @@ public class CollisionHandler : MonoBehaviour
         }
     }
 
-    private void StartSucessSequence()
+    void StartSucessSequence()
     {
         isTransitioning = true;
         StopPlayerMovement();
         Invoke("LoadNextLevel", loadLevelDelay);
         audioSource.Stop();
         audioSource.PlayOneShot(success);
+        successParticle.Play();
+
         
       
     }
@@ -54,6 +95,7 @@ public class CollisionHandler : MonoBehaviour
         Invoke("ReloadLevel", loadLevelDelay);
         audioSource.Stop();
         audioSource.PlayOneShot(failExplosion);
+        failExplosionParticle.Play();
         
         
 
