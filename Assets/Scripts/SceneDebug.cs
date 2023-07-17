@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class SceneDebug : MonoBehaviour
 {
 
-    [SerializeField] Collider rocket;
+    [SerializeField] GameObject rocket;
 
-    void Start()
+    private Collider _collider;
+
+    void Awake()
     {
-        rocket = GetComponent<Collider>();
+        _collider = rocket.GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -40,7 +42,7 @@ public class SceneDebug : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.C))
         {
-            rocket.enabled = !rocket.enabled;
+            _collider.enabled = !_collider.enabled;
         }
     }
 }

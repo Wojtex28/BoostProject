@@ -51,20 +51,16 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             RotationLeft();
-
         }
-
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             RotationRight();
-
         }
         else
         {
             leftThrusterParticles.Stop();
             rightThrusterParticles.Stop();
         }
-
     }
 
     void StartThrusting()
@@ -86,7 +82,6 @@ public class Movement : MonoBehaviour
     private void RotationRight()
     {
         ApplyRotation(-rotationPower);
-        rightThrusterParticles.Play();
         Debug.Log("Rotated Right");
 
         if (!rightThrusterParticles.isPlaying)

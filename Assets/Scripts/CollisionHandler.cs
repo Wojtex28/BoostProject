@@ -22,41 +22,6 @@ public class CollisionHandler : MonoBehaviour
     public bool collisionDisable = false;
     
 
-    void Update()
-    {
-        NextScene();
-        DisableCollisions();
-    }
-
-    //SCENE DEBUG START
-
-    void NextScene()
-    {
-
-        if (Input.GetKey(KeyCode.L))
-        {
-            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            int loadNextLevel = currentSceneIndex + 1;
-            if (loadNextLevel == SceneManager.sceneCountInBuildSettings)
-            {
-                loadNextLevel = 0;
-            }
-            SceneManager.LoadScene(loadNextLevel);
-        }
-
-    }
-
-    void DisableCollisions()
-    {
-        if (Input.GetKeyUp(KeyCode.C))
-        {
-            collisionDisable = !collisionDisable; // toggle collision
-        }
-    }
-
-    //SCENE DEBUG END
-
-
     void OnCollisionEnter(Collision other)
     {
         if (isTransitioning || collisionDisable) { return; }
